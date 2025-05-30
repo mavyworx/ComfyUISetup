@@ -1,18 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo "ComfyUI Setup Script starting..."
+
 COMFY_DIR="/workspace/ComfyUI"
 
-# ── one-time setup ────────────────────────────────────────
+# One-time setup ────────────────────────────────────────
 if [ ! -d "$COMFY_DIR" ]; then
   echo "$COMFY_DIR not found, installing ComfyUI..."
-  git clone --depth 1 https://github.com/comfyanonymous/ComfyUI "$COMFY_DIR"
-  python -m venv "$COMFY_DIR/venv"
-  "$COMFY_DIR/venv/bin/pip" install -U pip wheel
-  "$COMFY_DIR/venv/bin/pip" install -r "$COMFY_DIR/requirements.txt"
-fi
+  
+  apt update
+  apt install -y wget curl git ca-certificates
 
-# ── launch comfy ────────────────────────────────────────────────
-cd "$COMFY_DIR"
-source venv/bin/activate
-exec python main.py --listen 0.0.0.0 --port 8188
+  MINICONDA_DIR=/workspace/miniconda
+  mkdir -p $MINICONDA_DIR
+  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $MINICONDA_DIR/miniconda.sh
+  bash $MINICONDA_DIR/miniconda.sh -b -u -p $MINICONDA_DIR
+  rm $MINICONDA_DIR/miniconda.sh
+  source $MINICONDA_DIR/bin/activate
+  conda create -y -n comfyenv python=3.12 pytorch=2.7.* pytorch-cuda=12.4 -c pytorch -c nvidia -c conda-forge
+fi
