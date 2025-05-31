@@ -16,4 +16,5 @@ if [ ! -d "$COMFY_DIR" ]; then
 
   # Conda environment
   create -y -p $CONDA_ENV_DIR python=3.12 pytorch=2.6.* pytorch-cuda=12.4 -c pytorch -c nvidia -c conda-forge
+  conda activate $CONDA_ENV_DIR
 fi
