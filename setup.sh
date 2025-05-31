@@ -14,7 +14,7 @@ if [ ! -d "$COMFY_DIR" ]; then
   
   # Conda environment
   conda create -y -p $CONDA_ENV_DIR python=3.12 
-  conda install pytorch=2.6.* pytorch-cuda=12.4 torchvision torchaudio -c pytorch -c nvidia -c conda-forge
+  conda install -y -p $CONDA_ENV_DIR pytorch=2.6.* pytorch-cuda=12.4 torchvision torchaudio -c pytorch -c nvidia -c conda-forge
 
   # ComfyUI
   git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git $COMFY_DIR
