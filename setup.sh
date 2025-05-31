@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set PS4=''
+set -xeuo pipefail
 
 echo "ComfyUI Setup Script starting..."
 
