@@ -12,7 +12,7 @@ CONDA_ENV_DIR="/workspace/comfyenv"
 if [ ! -d $CONDA_ENV_DIR ]; then
   : "[ComfyUISetup] No Conda environment found, creating..."
   conda create -y -p $CONDA_ENV_DIR python=3.12 
-  conda install -y -p $CONDA_ENV_DIR pytorch=2.7.* torchvision torchaudio pytorch-cuda=12.6  -c pytorch -c nvidia -c conda-forge
+  conda install -y -p $CONDA_ENV_DIR pytorch=2.7.* torchvision torchaudio -c pytorch -c nvidia -c conda-forge
 fi
 
 if [ ! -d "$COMFY_DIR" ]; then
