@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-: "[ComfyUISetup] setup script starting..."
-
 set -xeuo pipefail
 trap "echo [ComfyUISetup] script encountered an error. exiting without restart; exit 0" ERR
+
+: "[ComfyUISetup] setup script starting..."
 
 COMFY_DIR="/workspace/ComfyUI"
 CONDA_ENV_DIR="/workspace/comfyenv"
