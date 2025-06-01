@@ -23,5 +23,5 @@ fi
 
 : "[ComfyUISetup] starting ComfyUI..."
 cd $COMFY_DIR
-conda run -p $CONDA_ENV_DIR python main.py
+conda run -p $CONDA_ENV_DIR python main.py --listen 0.0.0.0 --port 8188
 sleep infinity
