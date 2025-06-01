@@ -22,6 +22,4 @@ if [ ! -d "$COMFY_DIR" ]; then
   conda run -p $CONDA_ENV_DIR pip install -r requirements.txt
 fi
 
-: "[ComfyUISetup] starting ComfyUI..."
-cd $COMFY_DIR
-conda run -p $CONDA_ENV_DIR python main.py --listen 0.0.0.0 --port 8188
+: "[ComfyUISetup] finished"
