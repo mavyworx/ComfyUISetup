@@ -7,6 +7,7 @@ trap "echo [ComfyUISetup] script encountered an error. exiting without restart; 
 
 COMFY_DIR="/workspace/ComfyUI"
 COMFY_MGR_DIR="/workspace/ComfyUI/custom_nodes/comfyui-manager"
+OUTPUT_DIR="/workspace/output"
 CONDA_ENV_DIR="/workspace/comfyenv"
 
 # One-time setup ────────────────────────────────────────
@@ -26,6 +27,10 @@ fi
 if [ ! -d $COMFY_MGR_DIR ]; then
   : "[ComfyUISetup] No ComfyUI Manager found, creating..."
   git clone --depth 1 https://github.com/ltdrdata/ComfyUI-Manager $COMFY_MGR_DIR
+fi
+
+if [ ! -d $OUTPUT_DIR ]; then
+  mkdir $OUTPUT_DIR
 fi
 
 : "[ComfyUISetup] finished"
