@@ -47,10 +47,27 @@ if [ ! -d $COMFY_ENV_DIR ]; then
   conda install -y -p $COMFY_ENV_DIR pytorch=2.7.* cuda-toolkit=12.6 torchvision torchaudio -c pytorch -c nvidia
 fi
 
+OUTPUT_DIR="/workspace/output"
+if [ ! -d $OUTPUT_DIR ]; then
+  mkdir $OUTPUT_DIR
+fi
+
+MY_MODELS_DIR="/workspace/my_models"
+if [ ! -d $MY_MODELS_DIR ]; then
+  mkdir $MY_MODELS_DIR $MY_MODELS_DIR/checkpoints $MY_MODELS_DIR/loras
+fi
+
 setup_component "ComfyUI" \
                 "$COMFY_DIR" \
                 "https://github.com/comfyanonymous/ComfyUI.git" \
                 true
+
+cat <<EOF > $COMFY_DIR/extra_model_paths.yaml
+comfyui:
+  base_path: $MY_MODELS_DIR
+  checkpoints: checkpoints
+  loras: loras
+EOF
                 
 setup_component "ComfyUI Manager" \
                 "$COMFY_DIR/custom_nodes/comfyui-manager" \
@@ -67,9 +84,6 @@ setup_component "ComfyUI-Crystools" \
                 "https://github.com/crystian/ComfyUI-Crystools.git" \
                 true
 
-OUTPUT_DIR="/workspace/output"
-if [ ! -d $OUTPUT_DIR ]; then
-  mkdir $OUTPUT_DIR
-fi
+
 
 echo "[ComfyUISetup] finished"
