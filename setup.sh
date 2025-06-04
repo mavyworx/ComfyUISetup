@@ -5,8 +5,8 @@ trap "echo [ComfyUISetup] script encountered an error. exiting without restart; 
 
 : "[ComfyUISetup] setup script starting..."
 
-COMFY_DIR="/workspace/ComfyUI"
-COMFY_ENV_DIR="/workspace/comfyenv"
+COMFY_DIR=/workspace/ComfyUI
+COMFY_ENV_DIR=/workspace/comfyenv
 
 if [ ! -d $COMFY_ENV_DIR ]; then
   : "[ComfyUISetup] No Conda environment found, creating..."
