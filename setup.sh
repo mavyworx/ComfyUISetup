@@ -24,7 +24,7 @@ fi
 COMFY_MGR_DIR=$COMFY_DIR/custom_nodes/comfyui-manager
 if [ ! -d $COMFY_MGR_DIR ]; then
   : "[ComfyUISetup] No ComfyUI Manager found, creating..."
-  git clone --depth 1 https://github.com/ltdrdata/ComfyUI-Manager $COMFY_MGR_DIR
+  git clone --depth 1 https://github.com/ltdrdata/ComfyUI-Manager.git $COMFY_MGR_DIR
 fi
 
 MODEL_MGR_DIR=$COMFY_DIR/custom_nodes/ComfyUI-Model-Manager
