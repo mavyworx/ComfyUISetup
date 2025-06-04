@@ -30,7 +30,7 @@ fi
 MODEL_MGR_DIR=$COMFY_DIR/custom_nodes/ComfyUI-Model-Manager
 if [ ! -d $MODEL_MGR_DIR ]; then
   : "[ComfyUISetup] No ComfyUI-Model-Manager found, creating..."
-  git clone --depth 1 git clone https://github.com/hayden-fr/ComfyUI-Model-Manager.git $MODEL_MGR_DIR
+  git clone --depth 1 https://github.com/hayden-fr/ComfyUI-Model-Manager.git $MODEL_MGR_DIR
 fi
 
 CRYSTOOLS_DIR=$COMFY_DIR/custom_nodes/ComfyUI-Crystools
