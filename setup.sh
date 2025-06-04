@@ -27,10 +27,16 @@ if [ ! -d $COMFY_MGR_DIR ]; then
   git clone --depth 1 https://github.com/ltdrdata/ComfyUI-Manager $COMFY_MGR_DIR
 fi
 
+MODEL_MGR_DIR=$COMFY_DIR/custom_nodes/ComfyUI-Model-Manager
+if [ ! -d $MODEL_MGR_DIR ]; then
+  : "[ComfyUISetup] No ComfyUI-Model-Manager found, creating..."
+  git clone --depth 1 git clone https://github.com/hayden-fr/ComfyUI-Model-Manager.git $MODEL_MGR_DIR
+fi
+
 CRYSTOOLS_DIR=$COMFY_DIR/custom_nodes/ComfyUI-Crystools
 if [ ! -d $CRYSTOOLS_DIR ]; then
   : "[ComfyUISetup] No ComfyUI-Crystools found, creating..."
-  git clone --depth 1 https://github.com/crystian/ComfyUI-Crystools.git
+  git clone --depth 1 https://github.com/crystian/ComfyUI-Crystools.git $CRYSTOOLS_DIR
   cd $CRYSTOOLS_DIR
   conda run -p $COMFY_ENV_DIR pip install -r requirements.txt
 fi
