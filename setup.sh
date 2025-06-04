@@ -21,7 +21,7 @@ if [ ! -d $COMFY_DIR ]; then
   conda run -p $COMFY_ENV_DIR pip install -r requirements.txt
 fi
 
-COMFY_MGR_DIR=$COMFY_DIR/custom_nodes/comfyui-manager"
+COMFY_MGR_DIR=$COMFY_DIR/custom_nodes/comfyui-manager
 if [ ! -d $COMFY_MGR_DIR ]; then
   : "[ComfyUISetup] No ComfyUI Manager found, creating..."
   git clone --depth 1 https://github.com/ltdrdata/ComfyUI-Manager $COMFY_MGR_DIR
