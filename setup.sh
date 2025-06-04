@@ -8,7 +8,6 @@ trap "echo [ComfyUISetup] script encountered an error. exiting without restart; 
 COMFY_DIR="/workspace/ComfyUI"
 COMFY_MGR_DIR="/workspace/ComfyUI/custom_nodes/comfyui-manager"
 COMFY_ENV_DIR="/workspace/comfyenv"
-NOTEBOOK_ENV_DIR="/workspace/notebookenv"
 OUTPUT_DIR="/workspace/output"
 
 if [ ! -d $COMFY_ENV_DIR ]; then
@@ -31,11 +30,6 @@ fi
 
 if [ ! -d $OUTPUT_DIR ]; then
   mkdir $OUTPUT_DIR
-fi
-
-if [ ! -d $NOTEBOOK_ENV_DIR ]; then
-  conda create -y -p $NOTEBOOK_ENV_DIR python=3.11
-  conda install -y -p $NOTEBOOK_ENV_DIR pytorch=2.7.* jupyterlab=4.* -c conda-forge
 fi
 
 : "[ComfyUISetup] finished"
