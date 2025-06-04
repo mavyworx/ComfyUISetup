@@ -14,32 +14,53 @@ if [ ! -d $COMFY_ENV_DIR ]; then
   conda install -y -p $COMFY_ENV_DIR pytorch=2.7.* cuda-toolkit=12.6 torchvision torchaudio -c pytorch -c nvidia
 fi
 
-if [ ! -d $COMFY_DIR ]; then
-  : "[ComfyUISetup] No ComfyUI found, creating..."
-  git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git $COMFY_DIR
-  cd $COMFY_DIR
-  conda run -p $COMFY_ENV_DIR pip install -r requirements.txt
-fi
+# Function to clone a GitHub repo if its target directory doesn’t exist,
+# and optionally run pip install.
+#
+# Args:
+#   1) name     : display name of the component (for logging)
+#   2) dest     : full path to the destination folder
+#   3) url      : GitHub URL to clone
+#   4) do_pip   : “true” or “false” – whether to run pip install after cloning
+setup_component() {
+  local name="$1"
+  local dest="$2"
+  local url="$3"
+  local do_pip="$4"
 
-COMFY_MGR_DIR=$COMFY_DIR/custom_nodes/comfyui-manager
-if [ ! -d $COMFY_MGR_DIR ]; then
-  : "[ComfyUISetup] No ComfyUI Manager found, creating..."
-  git clone --depth 1 https://github.com/ltdrdata/ComfyUI-Manager.git $COMFY_MGR_DIR
-fi
+  if [ ! -d "$dest" ]; then
+    echo "[ComfyUISetup] No $name found, creating..."
+    git clone --depth 1 "$url" "$dest"
 
-MODEL_MGR_DIR=$COMFY_DIR/custom_nodes/ComfyUI-Model-Manager
-if [ ! -d $MODEL_MGR_DIR ]; then
-  : "[ComfyUISetup] No ComfyUI-Model-Manager found, creating..."
-  git clone --depth 1 https://github.com/hayden-fr/ComfyUI-Model-Manager.git $MODEL_MGR_DIR
-fi
+    if [ "$do_pip" = "true" ]; then
+      # Enter the newly cloned directory, install requirements, then return
+      cd "$dest"
+      conda run -p "$COMFY_ENV_DIR" pip install -r requirements.txt
+      cd - > /dev/null
+    fi
+  fi
+}
 
-CRYSTOOLS_DIR=$COMFY_DIR/custom_nodes/ComfyUI-Crystools
-if [ ! -d $CRYSTOOLS_DIR ]; then
-  : "[ComfyUISetup] No ComfyUI-Crystools found, creating..."
-  git clone --depth 1 https://github.com/crystian/ComfyUI-Crystools.git $CRYSTOOLS_DIR
-  cd $CRYSTOOLS_DIR
-  conda run -p $COMFY_ENV_DIR pip install -r requirements.txt
-fi
+setup_component "ComfyUI" \
+                "$COMFY_DIR" \
+                "https://github.com/comfyanonymous/ComfyUI.git" \
+                true
+
+
+setup_component "ComfyUI Manager" \
+                "$COMFY_DIR/custom_nodes/comfyui-manager" \
+                "https://github.com/ltdrdata/ComfyUI-Manager.git" \
+                false
+
+setup_component "ComfyUI Model Manager" \
+                "$COMFY_DIR/custom_nodes/ComfyUI-Model-Manager" \
+                "https://github.com/hayden-fr/ComfyUI-Model-Manager.git" \
+                false
+
+setup_component "ComfyUI-Crystools" \
+                "$COMFY_DIR/custom_nodes/ComfyUI-Crystools" \
+                "https://github.com/crystian/ComfyUI-Crystools.git" \
+                true
 
 OUTPUT_DIR="/workspace/output"
 if [ ! -d $OUTPUT_DIR ]; then
