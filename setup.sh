@@ -13,7 +13,7 @@ OUTPUT_DIR="/workspace/output"
 if [ ! -d $COMFY_ENV_DIR ]; then
   : "[ComfyUISetup] No Conda environment found, creating..."
   conda create -y -p $COMFY_ENV_DIR python=3.12 
-  conda install -y -p $COMFY_ENV_DIR pytorch=2.7.* torchvision torchaudio -c pytorch -c nvidia -c conda-forge
+  conda install -y -p $COMFY_ENV_DIR pytorch=2.7.* cuda-toolkit=12.6 torchvision torchaudio -c pytorch -c nvidia
 fi
 
 if [ ! -d $COMFY_DIR ]; then
