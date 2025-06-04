@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-set -xeuo pipefail
-trap "echo [ComfyUISetup] script encountered an error. exiting without restart; exit 0" ERR
+set -euo pipefail
+trap '
+  echo "[ComfyUISetup] script encountered an error on command:"
+  echo "  $BASH_COMMAND"
+  echo "on line $LINENO"
+  echo "Exiting without restart..."
+  exit 0
+' ERR
 
-: "[ComfyUISetup] setup script starting..."
+echo "[ComfyUISetup] setup script starting..."
 
 COMFY_DIR=/workspace/ComfyUI
 COMFY_ENV_DIR=/workspace/comfyenv
-
-if [ ! -d $COMFY_ENV_DIR ]; then
-  : "[ComfyUISetup] No Conda environment found, creating..."
-  conda create -y -p $COMFY_ENV_DIR python=3.12 
-  conda install -y -p $COMFY_ENV_DIR pytorch=2.7.* cuda-toolkit=12.6 torchvision torchaudio -c pytorch -c nvidia
-fi
 
 # Function to clone a GitHub repo if its target directory doesn’t exist,
 # and optionally run pip install.
@@ -41,12 +41,17 @@ setup_component() {
   fi
 }
 
+if [ ! -d $COMFY_ENV_DIR ]; then
+  echo "[ComfyUISetup] No Conda environment found, creating..."
+  conda create -y -p $COMFY_ENV_DIR python=3.12 
+  conda install -y -p $COMFY_ENV_DIR pytorch=2.7.* cuda-toolkit=12.6 torchvision torchaudio -c pytorch -c nvidia
+fi
+
 setup_component "ComfyUI" \
                 "$COMFY_DIR" \
                 "https://github.com/comfyanonymous/ComfyUI.git" \
                 true
-
-
+                
 setup_component "ComfyUI Manager" \
                 "$COMFY_DIR/custom_nodes/comfyui-manager" \
                 "https://github.com/ltdrdata/ComfyUI-Manager.git" \
@@ -67,4 +72,4 @@ if [ ! -d $OUTPUT_DIR ]; then
   mkdir $OUTPUT_DIR
 fi
 
-: "[ComfyUISetup] finished"
+echo "[ComfyUISetup] finished"
